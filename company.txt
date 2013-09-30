@@ -1,0 +1,12 @@
+1101	Receiving
+1102	Delivering
+1103	Selling
+1104	Account Payable
+1105	Acount Receivable 
+1106	Storage
+1107	Advertising
+1108	Ordering
+1109	Reception
+1110	Filing
+1111	Oganizing
+1112	Human Resource
