@@ -8,7 +8,7 @@
 3	301	Feet Farmland	0.20
 3	302	Whole Farmland	6.50
 3	303	Breast Farmland	4.40
-4	401	Feet Farmer John	0.18	
+4	401	Feet Farmer John	0.18
 4	402	Whole Farmer John	5.50
 4	403	Tongue Farmer John	6.70
 5	501	Salmon USA	4.50
@@ -20,4 +20,4 @@
 6	605	Headon Indonesia	12.10
 6	606	Headless Indonesia	13.10
 7	701	Quail Vietnam	4.55
-7	702	Octopus Malasia	10.09	
+7	702	Octopus Malasia	10.09
