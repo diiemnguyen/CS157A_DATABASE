@@ -1,8 +1,7 @@
-1	beef		
-2	pork		
-3	chicken	
-4	duck	
-5	fish	
-6	shrimp	
-7	mix	
-		
+1	beef
+2	pork
+3	chicken
+4	duck
+5	fish
+6	shrimp
+7	mix
