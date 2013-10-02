@@ -1,12 +1,12 @@
-1101	Receiving
-1102	Delivering
-1103	Selling
-1104	Account Payable
-1105	Acount Receivable 
-1106	Storage
-1107	Advertising
-1108	Ordering
-1109	Reception
-1110	Filing
-1111	Oganizing
-1112	Human Resource
+1101	Receiving	George
+1102	Delivering	Mario
+1103	Selling	Lucie
+1104	Account Payable	Ann
+1105	Acount Receivable	Carol 
+1106	Storage	Mack
+1107	Advertising	Jessica
+1108	Ordering	Jerrie
+1109	Reception	Kathy
+1110	Filing	Ben
+1111	Oganizing	Danny
+1112	Human Resource	Tom

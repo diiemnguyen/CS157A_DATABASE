@@ -3,5 +3,5 @@
 3	chicken
 4	duck
 5	fish
-6	shrimp
+6	shrimp 
 7	mix
