@@ -14,9 +14,9 @@ CREATE TABLE company
 );
 
 
-/* Table 2: employees */
-DROP TABLE IF EXISTS employees;
-CREATE TABLE employees
+/* Table 2: employee */
+DROP TABLE IF EXISTS employee;
+CREATE TABLE employee
 (empl_ID INT,
  dept_ID INT,
  empl_Name VARCHAR (100),
@@ -28,9 +28,9 @@ CREATE TABLE employees
 );
 
 
-/* Table 3: sale_transactions */
-DROP TABLE IF EXISTS sale_transactions;
-CREATE TABLE sale_transactions
+/* Table 3: transactions */
+DROP TABLE IF EXISTS transactions;
+CREATE TABLE transactions
 (empl_ID INT, 
  prod_ID INT, 
  cust_ID INT, 
@@ -40,18 +40,18 @@ CREATE TABLE sale_transactions
 );
 
 
-/* Table 4: products */
-DROP TABLE IF EXISTS products;
-CREATE TABLE products
+/* Table 4: product */
+DROP TABLE IF EXISTS product;
+CREATE TABLE product
 (prod_ID INT,
  prod_NAME VARCHAR(30),
  PRIMARY KEY (prod_ID)
 ); 
 
 
-/* Table 5: product_lists */
-DROP TABLE IF EXISTS product_lists;
-CREATE TABLE product_lists
+/* Table 5: inventory */
+DROP TABLE IF EXISTS inventory;
+CREATE TABLE inventory
 (prod_ID INT,
  prod_No INT,
  prod_Title VARCHAR (200),
@@ -62,9 +62,9 @@ CREATE TABLE product_lists
 ); 
 
 
-/* Table 6: customers */
-DROP TABLE IF EXISTS customers;
-CREATE TABLE customers
+/* Table 6: customer */
+DROP TABLE IF EXISTS customer;
+CREATE TABLE customer
 (cust_ID INT,
  cust_Name VARCHAR (100),
  cust_Email VARCHAR (100),
@@ -72,9 +72,9 @@ CREATE TABLE customers
 );
 
 
-/* Table 7: customer_orders */
-DROP TABLE IF EXISTS customer_orders;
-CREATE TABLE customer_orders
+/* Table 7: orders */
+DROP TABLE IF EXISTS orders;
+CREATE TABLE orders
 (cust_ID INT,
  prod_ID INT,
  cust_Total_Order INT,
@@ -85,5 +85,5 @@ CREATE TABLE customer_orders
 
 
 LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\company.txt' INTO TABLE company;
-LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\products.txt' INTO TABLE products;
-LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\product_lists.txt' INTO TABLE product_lists;
+LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\product.txt' INTO TABLE product;
+LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\inventory.txt' INTO TABLE inventory;
