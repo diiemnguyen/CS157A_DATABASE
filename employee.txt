@@ -1,20 +1,20 @@
-11011	1101	George	01-03-1975	george@food.com	Receiving Manager	35,000.00
-11012	1101	Hugo	08-02-1978	hugo@food.com	Receiver	30,000.00
-11013	1101	Kevin	11-01-1975	kevin@food.com	Receiver	28,000.00
-11021	1102	Mario	06-05-1970	mario@food.com	Delivering Manager	32,000.00
-11022	1102	John	08-11-1972	john@food.com	Deliver	31,000.00
-11023	1102	Ron	12-28-1971	ron@food.com	Deliver	30,000.00
-11031	1103	Lucie	06-15-1984	lucie@food.com	Sale Manager	45,000.00
-11032	1103	Ken	07-12-1982	ken@food.com	Saleman	40,000.00
-11041	1104	Ann	08-12-1965	ann@food.com	Account Payable Manager	42,000.00
-11051	1105	Carol 	09-18-1962	carol@food.com	Account Receivable Manager	41,000.00
-11061	1106	Mack	05-01-1980	mack@food.com	Storrage Manager	35,000.00
-11071	1107	Jessica	09-09-1989	jessica@food.com	Advertising Manager	38,000.00
-11081	1108	Jerrie	07-14-1985	jerrie@food.com	Ordering Manager	28,000.00
-11082	1108	Tommy	06-11-1979	tommy@food.com	Data Typer	25,000.00
-11091	1109	Kathy	01-03-1985	kathy@food.com	Reception Manager	27,000.00
-11101	1110	Ben	12-12-1962	ben@food.com	Filing Manager	25,000.00
-11102	1110	Hellen	11-01-1958	hellen@food.com	Filer	23,000.00
-11111	1111	Danny	05-15-1955	danny@food.com	Organizing Manager	26,000.00
-11121	1112	Tom	09-16-1972	tom@food.com	Human Resource Manager	33,000.00
-11122	1112	Harry	02-18-1946	harry@food.com	Human Resource Assistant	27.000.00
+11011	1101	George	01-03-1975	george@food.com	Receiving Manager	35000.00
+11012	1101	Hugo	08-02-1978	hugo@food.com	Receiver	30000.00
+11013	1101	Kevin	11-01-1975	kevin@food.com	Receiver	28000.00
+11021	1102	Mario	06-05-1970	mario@food.com	Delivering Manager	32000.00
+11022	1102	John	08-11-1972	john@food.com	Deliver	31000.00
+11023	1102	Ron	12-28-1971	ron@food.com	Deliver	30000.00
+11031	1103	Lucie	06-15-1984	lucie@food.com	Sale Manager	45000.00
+11032	1103	Ken	07-12-1982	ken@food.com	Saleman	40000.00
+11041	1104	Ann	08-12-1965	ann@food.com	Account Payable Manager	42000.00
+11051	1105	Carol 	09-18-1962	carol@food.com	Account Receivable Manager	41000.00
+11061	1106	Mack	05-01-1980	mack@food.com	Storrage Manager	35000.00
+11071	1107	Jessica	09-09-1989	jessica@food.com	Advertising Manager	38000.00
+11081	1108	Jerrie	07-14-1985	jerrie@food.com	Ordering Manager	28000.00
+11082	1108	Tommy	06-11-1979	tommy@food.com	Data Typer	25000.00
+11091	1109	Kathy	01-03-1985	kathy@food.com	Reception Manager	27000.00
+11101	1110	Ben	12-12-1962	ben@food.com	Filing Manager	25000.00
+11102	1110	Hellen	11-01-1958	hellen@food.com	Filer	23000.00
+11111	1111	Danny	05-15-1955	danny@food.com	Organizing Manager	26000.00
+11121	1112	Tom	09-16-1972	tom@food.com	Human Resource Manager	33000.00
+11122	1112	Harry	02-18-1946	harry@food.com	Human Resource Assistant	27000.00

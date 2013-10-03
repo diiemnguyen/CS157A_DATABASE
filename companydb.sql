@@ -24,7 +24,7 @@ CREATE TABLE employee
  empl_Email VARCHAR (100), 
  empl_Position VARCHAR (50), 
  empl_Salary DOUBLE,
- PRIMARY KEY(empl_ID,dept_ID)
+ PRIMARY KEY(empl_ID,dept_ID,empl_DOB)
 );
 
 
@@ -85,5 +85,7 @@ CREATE TABLE orders
 
 
 LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\company.txt' INTO TABLE company;
+LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\employee.txt' INTO TABLE employee;
 LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\product.txt' INTO TABLE product;
 LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\inventory.txt' INTO TABLE inventory;
+
