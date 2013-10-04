@@ -32,7 +32,7 @@ CREATE TABLE employee
 DROP TABLE IF EXISTS transactions;
 CREATE TABLE transactions
 (empl_ID INT, 
- prod_ID INT, 
+ prod_ID VARCHAR(10), 
  cust_ID INT, 
  sale_case INT, 
  sale_amount DOUBLE,
@@ -43,7 +43,7 @@ CREATE TABLE transactions
 /* Table 4: product */
 DROP TABLE IF EXISTS product;
 CREATE TABLE product
-(prod_ID INT,
+(prod_ID VARCHAR(10),
  prod_NAME VARCHAR(30),
  PRIMARY KEY (prod_ID)
 ); 
@@ -52,7 +52,7 @@ CREATE TABLE product
 /* Table 5: inventory */
 DROP TABLE IF EXISTS inventory;
 CREATE TABLE inventory
-(prod_ID INT,
+(prod_ID VARCHAR(10),
  prod_No INT,
  prod_Title VARCHAR (200),
  prod_Case_Qty INT,
@@ -76,7 +76,7 @@ CREATE TABLE customer
 DROP TABLE IF EXISTS orders;
 CREATE TABLE orders
 (cust_ID INT,
- prod_ID INT,
+ prod_ID VARCHAR(10),
  cust_Total_Order INT,
  cust_Year_Order INT,
  cust_Total_Amount DOUBLE
