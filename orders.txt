@@ -1,0 +1,5 @@
+1	Lucie	2013-10-01	Lion Market	101	Beef Feet Sunland	10	170.00
+2	Ken	2013-10-02	99 Ranch Market	102	Beef Head Sunland	10	135.00
+3	Ken	2013-10-03	Fresh Market	103	Beef Steak Sunland	10	840.00
+4	Ken	2013-10-04	Japanese Supermarket	104	Beef T-bone Sunland	10	750.00
+5	Ken	2013-10-04	San Jose Market	201	Pork Feet Nebraska	10	110.00

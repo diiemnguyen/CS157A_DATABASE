@@ -1,8 +1,8 @@
 1 - company  (dept_ID, dept_Name, dept_Manager)
 2 - employee (empl_ID, dept_ID, empl_Name, empl_DOB, empl_Email, empl_Position, empl_Salary)
-3 - transactions (empl_ID, prod_ID, cust_ID, sale_case, sale_amount)
-4 - product (prod_ID, prod_Name)
-5 - inventory (prod_ID, prod_No, prod_Title, prod_Case_Qty, prod_Case_Weight, prod_Case_Price)
+3 - transactions (empl_ID, prod_No, sale_Name, sale_Year, sale_Case, sale_Amount)
+4 - product (prod_Code, prod_Name)
+5 - inventory (prod_Code, prod_No, prod_Title, prod_Case_Qty, prod_Case_Weight, prod_Case_Price)
 6 - customer (cust_ID, cust_Name, cust_Email, cust_Date)
-7 - orders (cust_ID, prod_ID, cust_Total_Order--count case, cust_Year_Order, cust_Total_Amount)  
--- keep track customer orders (total cases, total amount) per year
+7 - orders (ord_ID, sale_Name, ord_Date, cust_Name, prod_No, prod_Title, ord_Case, ord_Amount)  
+

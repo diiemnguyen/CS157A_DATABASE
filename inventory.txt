@@ -1,23 +1,23 @@
-1b	101	Feet Sunland	1000	20	17.00
-1b	102	Head Sunland	1000	30	13.50	
-1b	103	Steak Sunland	1000	20	84.00
-1b	104	T-bone Sunland	1000	20	75.00
-2p	201	Feet Nebraska	1000	20	11.00
-2p	202	Head Nebraska	1000	30	10.50
-2p	203	Stomach Nebraska	1000	15	13.20
-3c	301	Feet Farmland	1000	15	14.95
-3c	302	Whole Farmland	1000	30	155.00
-3c	303	Breast Farmland	1000	20	66.00
-4d	401	Feet Farmer John	1000	20	19.20
-4d	402	Whole Farmer John	1000	30	125.00
-4d	403	Tongue Farmer John	1000	10	90.50
-5f	501	Salmon USA	1000	20	90.00
-5f	502	Tilapia USA	1000	20	110.00
-6s	601	Headon Thailand	1000	30	320.00
-6s	602	Headless Thailand	1000	30	373.50
-6s	603	Headon Vietnam	1000	30	343.50
-6s	604	Headless Vietnam	1000	30	375.95
-6s	605	Headon Indonesia	1000	30	365.25
-6s	606	Headless Indonesia	1000	30	355.50
+1b	101	Beef Feet Sunland	990	20	17.00
+1b	102	Beef Head Sunland	990	30	13.50	
+1b	103	Beef Steak Sunland	990	20	84.00
+1b	104	Beef T-bone Sunland	990	20	75.00
+2p	201	Pork Feet Nebraska	990	20	11.00
+2p	202	pork Head Nebraska	1000	30	10.50
+2p	203	pork Stomach Nebraska	1000	15	13.20
+3c	301	Chicken Feet Farmland	1000	15	14.95
+3c	302	Chicken Whole Farmland	1000	30	155.00
+3c	303	Chicken Breast Farmland	1000	20	66.00
+4d	401	Duck Feet Farmer John	1000	20	19.20
+4d	402	Duck Whole Farmer John	1000	30	125.00
+4d	403	Duck Tongue Farmer John	1000	10	90.50
+5f	501	Fish Salmon USA	1000	20	90.00
+5f	502	Fish Tilapia USA	1000	20	110.00
+6s	601	Shrimp Headon Thailand	1000	30	320.00
+6s	602	Shrimp Headless Thailand	1000	30	373.50
+6s	603	Shrimp Headon Vietnam	1000	30	343.50
+6s	604	Shrimp Headless Vietnam	1000	30	375.95
+6s	605	Shrimp Headon Indonesia	1000	30	365.25
+6s	606	Shrimp Headless Indonesia	1000	30	355.50
 7m	701	Quail Vietnam	1000	30	136.50
 7m	702	Octopus Malasia	1000	30	302.70
