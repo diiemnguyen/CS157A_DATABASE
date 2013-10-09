@@ -23,7 +23,7 @@ CREATE TABLE employee
  empl_DOB DATE, 
  empl_Email VARCHAR (100), 
  empl_Position VARCHAR (50), 
- empl_Salary DOUBLE,
+ empl_Salary DECIMAL(10,2),
  PRIMARY KEY(dept_ID, empl_ID, empl_Name)
 );
 
@@ -32,52 +32,34 @@ CREATE TABLE employee
 DROP TABLE IF EXISTS transactions;
 CREATE TABLE transactions
 (empl_ID INT, 
-<<<<<<< HEAD
- prod_ID VARCHAR(10), 
- cust_ID INT, 
- sale_case INT, 
- sale_amount DOUBLE,
- PRIMARY KEY(empl_ID,prod_ID)
-=======
  prod_No INT, 
- sale_Name CHAR(30), 
+ sale_Name VARCHAR(30), 
  sale_Year INT, 
  sale_Case INT,
- sale_Amount DOUBLE,
+ sale_Amount DECIMAL(10,2),
  PRIMARY KEY(prod_No)
->>>>>>> done sql and 7 tables
 );
 
 
 /* Table 4: product */
 DROP TABLE IF EXISTS product;
 CREATE TABLE product
-<<<<<<< HEAD
-(prod_ID VARCHAR(10),
- prod_NAME VARCHAR(30),
- PRIMARY KEY (prod_ID)
-=======
-(prod_Code VARCHAR(10),
- prod_Name VARCHAR(30),
- PRIMARY KEY (prod_Name)
->>>>>>> done sql and 7 tables
+(prod_Code VARCHAR(10) NOT NULL,
+ prod_Name VARCHAR(30) NOT NULL,
+ UNIQUE (prod_Code)
 ); 
 
 
 /* Table 5: inventory */
 DROP TABLE IF EXISTS inventory;
 CREATE TABLE inventory
-<<<<<<< HEAD
-(prod_ID VARCHAR(10),
-=======
-(prod_Code CHAR(10),
->>>>>>> done sql and 7 tables
- prod_No INT,
+(prod_Code VARCHAR(10) NOT NULL,
+ prod_No INT NOT NULL,
  prod_Title VARCHAR (200),
  prod_Case_Qty INT,
  prod_Case_Weight INT,
- prod_Case_Price DOUBLE,
- PRIMARY KEY(prod_No, prod_Title)
+ prod_Case_Price DECIMAL(10,2),
+ PRIMARY KEY(prod_Code, prod_No, prod_Title)
 ); 
 
 
@@ -95,13 +77,6 @@ CREATE TABLE customer
 /* Table 7: orders */
 DROP TABLE IF EXISTS orders;
 CREATE TABLE orders
-<<<<<<< HEAD
-(cust_ID INT,
- prod_ID VARCHAR(10),
- cust_Total_Order INT,
- cust_Year_Order INT,
- cust_Total_Amount DOUBLE
-=======
 (ord_ID INT NOT NULL AUTO_INCREMENT,
  sale_Name CHAR(100),
  ord_Date DATE,
@@ -109,9 +84,8 @@ CREATE TABLE orders
  prod_No INT,
  prod_Title CHAR(200),
  ord_Case INT,
- ord_Amount DOUBLE,
+ ord_Amount DECIMAL(10,2),
  PRIMARY KEY(ord_ID)
->>>>>>> done sql and 7 tables
 );
 
 
