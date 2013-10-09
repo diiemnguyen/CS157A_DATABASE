@@ -1,5 +1,5 @@
 1b	101	Beef Feet Sunland	990	20	17.00
-1b	102	Beef Head Sunland	990	30	13.50	
+1b	102	Beef Head Sunland	990	30	13.50
 1b	103	Beef Steak Sunland	990	20	84.00
 1b	104	Beef T-bone Sunland	990	20	75.00
 2p	201	Pork Feet Nebraska	990	20	11.00
