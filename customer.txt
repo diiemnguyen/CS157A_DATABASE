@@ -1,5 +1,5 @@
-1	Lion Market	mark_sale@lionmarket.com	2013-10-01
-2	99 Ranch Market	Kennedy_sale@99ranch.com	2013-10-01
-3	Fresh Market	lucky_sale@fresh.com	2013-10-01
-4	Japanese Supermarket	Donky_sale@japansuper.com	2013-10-01
-5	San Jose Market	sam_sale@sjmarket.com	2013-10-01
+Lion Market	mark_sale@lionmarket.com
+99 Ranch Market	Kennedy_sale@99ranch.com
+Fresh Market	lucky_sale@fresh.com
+Japanese Supermarket	Donky_sale@japansuper.com
+San Jose Market	sam_sale@sjmarket.com
