@@ -168,7 +168,7 @@ delimiter ;
 #END TRIGGER 2
 
 
-#START TRIGGER 3: trigger_transaction -- will insert data to transactions after the order is made
+#START TRIGGER 3: trigger_transaction -- will insert data to transactions and update inventory after the order is made
 delimiter //
 DROP TRIGGER IF EXISTS trigger_transaction//
 CREATE TRIGGER trigger_transaction AFTER INSERT ON orders
@@ -176,6 +176,8 @@ FOR EACH ROW
 BEGIN
 	declare employee_ID varchar(100);
 	declare year_of_sale varchar(10);
+	declare in_Qty int;
+
 	set year_of_sale = (select year(sysdate()));
 
 	set @ord_ID = new.ord_ID;
@@ -199,6 +201,9 @@ BEGIN
 
 	insert into transactions(tran_Date, ord_ID, sale_Year, empl_ID, prod_No, cust_Name, prod_Title, sale_Name, sale_Case, sale_Price, sale_Amount) 
 	values(@ord_Date, @ord_ID, year_of_sale, employee_ID, @prod_No, @cust_name, @prod_Title, @sale_Name, @ord_Case, @ord_Case_Price, @ord_Amount);
+
+	set in_Qty = (select max(prod_Case_Qty) from inventory where prod_Title = new.prod_Title);
+	update inventory set prod_Case_Qty = in_Qty - new.ord_Case where prod_Title = new.prod_Title;
 
 END;
 //
