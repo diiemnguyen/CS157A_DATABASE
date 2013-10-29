@@ -5,31 +5,18 @@
  * Le,Thinh Minh (tmle04@yahoo.com)
  */
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Line2D;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -40,7 +27,6 @@ public class PublicUsers {
     static final String DB_URL = "jdbc:mysql://localhost/companydb";
     static final String USER= "root";
     static final String PASS= "Passw0rd";
-	private static final int GAP = 0;
     
     private Connection conn;
     private PreparedStatement ps;
@@ -48,7 +34,6 @@ public class PublicUsers {
     /* local variables for frame, panel, button, labels, text fields */
     private JFrame frame;
     private Panel p;
-    private JPanel panel;
     private JButton b_create, b_login;
     private JTextField f1, f2, f_email;
     private JLabel l1, l2;
@@ -140,7 +125,7 @@ public class PublicUsers {
       	              s2 = f2.getText();
       	              ps.setString(1, s1);
       	              ps.setString(2, s2);
-      	              int rs = ps.executeUpdate();
+      	              ps.executeUpdate();
       	              System.out.println("Your new account has been created successfully!");
       	              JOptionPane.showMessageDialog( b_create, "A new account has been created!", "SUCCESS", 0 );
                 	  
@@ -177,7 +162,7 @@ public class PublicUsers {
                     	  ps = (PreparedStatement) conn.prepareStatement("select cust_Email from customer where cust_Email = ?");
           	              s1 = f1.getText();
           	              ps.setString(1, s1);
-          	              boolean rs = ps.execute();
+          	              ps.execute();
           	              System.out.println("Login successfully!");
           	              JOptionPane.showMessageDialog( b_login, "Your are login!", "SUCCESS", 0 );
                     	  
