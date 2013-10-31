@@ -5,7 +5,7 @@
  * Le,Thinh Minh (tmle04@yahoo.com)
  */
 
-
+/**** THIS CODE IS GIVEN FOR GROUP PROJECT - FALL 2013 ***/
 //A TableModel that supplies ResultSet data to a JTable.
 
 import java.sql.Connection;
