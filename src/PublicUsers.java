@@ -9,6 +9,7 @@ import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
@@ -20,8 +21,15 @@ import javax.swing.JTextField;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
-public class PublicUsers {
+import java.io.*;
+import java.util.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class PublicUsers extends HttpServlet {
 	// JDBC driver, database URL, username and password
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/companydb";
@@ -30,15 +38,23 @@ public class PublicUsers {
     
     private Connection conn;
     private PreparedStatement ps;
-
+    private ResultSet rs;
+    private Statement statement;
+    private int rowNum;
+    
     /* local variables for frame, panel, button, labels, text fields */
+    private static final int FRAME_WIDTH = 370;
+    private static final int FRAME_HEIGHT = 350;
+    
     private JFrame frame;
     private Panel p;
     private JButton b_create, b_login;
     private JTextField f1, f2, f_email;
-    private JLabel l1, l2;
-    private JLabel l_email;
-    private String s1,s2;
+    private JLabel l1, l2, l_email;
+    private String s1, s2, s_email;
+    
+    private String userName = new String("");
+    private ServletConfig config;
     
     
     
@@ -92,21 +108,36 @@ public class PublicUsers {
     	p.add(f_email);
         p.add(b_login);
 
-        frame.setSize(370,350);
-        
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        frame.add(new JSeparator(JSeparator.HORIZONTAL));
-        
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.getContentPane().add(p);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        
         
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         // connect to database with database name, username and password
         conn = (Connection) DriverManager.getConnection( DB_URL, USER, PASS );
+        
     }
     
-    public void display() throws Exception {
+    public String getName()
+    {
+    	s1 = f1.getText();
+    	return s1; 
+    }
+    
+    public String getEmail()
+    {
+    	s2 = f2.getText();
+    	return s2; 
+    }
+    
+    public void init(ServletConfig config)  throws ServletException
+    {
+    	 this.config=config;
+    }
+    
+    public void display(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException, Exception {
        
     	/* action for create account button -- user creates a new account with company name and email */
         b_create.addActionListener( 
@@ -127,23 +158,29 @@ public class PublicUsers {
       	              ps.setString(2, s2);
       	              ps.executeUpdate();
       	              System.out.println("Your new account has been created successfully!");
-      	              JOptionPane.showMessageDialog( b_create, "A new account has been created!", "SUCCESS", 0 );
+      	              JOptionPane.showMessageDialog( null, "A new account has been created! \n " +
+      	              		"You can login to make an order", "SUCCESS", 1 );
+      	              f1.setText("");
+      	              f2.setText("");
+      	              frame.setVisible(true);
                 	  
                   } // end try
                   catch ( SQLException sqlException ) 
                   {
+                	  System.out.println("Please Enter Name and/or Email to create a new account");
                       JOptionPane.showMessageDialog( null, 
-                        sqlException.getMessage(), "Database error", 
-                        JOptionPane.ERROR_MESSAGE );
+                    		  sqlException.getMessage(), "Database error", 
+                    		  JOptionPane.ERROR_MESSAGE );
+                      f1.setText("");
+                      frame.setVisible(true);
                      
                   }             
-                  System.exit( 1 ); // terminate application
+                  //System.exit( 1 ); // terminate application
                                       
                   
                } // end actionPerformed
             } // end ActionListener inner class          
          ); // end call to addActionListener
-        
         
         
         
@@ -155,26 +192,42 @@ public class PublicUsers {
                    // pass query to table model
                    public void actionPerformed( ActionEvent event )
                    {
-                      // perform a new query
-                      try 
-                      {
-                    	  /* prepared statement is for select database table */
-                    	  ps = (PreparedStatement) conn.prepareStatement("select cust_Email from customer where cust_Email = ?");
-          	              s1 = f1.getText();
-          	              ps.setString(1, s1);
-          	              ps.execute();
-          	              System.out.println("Login successfully!");
-          	              JOptionPane.showMessageDialog( b_login, "Your are login!", "SUCCESS", 0 );
-                    	  
-                      } // end try
-                      catch ( SQLException sqlException ) 
-                      {
-                    	  JOptionPane.showMessageDialog( null, 
-                            sqlException.getMessage(), "Database error", 
-                            JOptionPane.ERROR_MESSAGE );
-                         
-                      }             
-                      System.exit( 1 ); // terminate application
+                	   try {
+	              			//Add the data into the database
+	              			String sql = "select cust_Email from customer";
+	              			statement = (Statement) conn.createStatement();
+	              			statement.executeQuery (sql);
+	              			rs = statement.getResultSet();
+	              			while (rs.next ()){
+	              				userName = rs.getString("cust_Email");
+	              			}
+	              			rs.close ();
+	              			statement.close ();
+	              		}catch(Exception e){
+	              			System.out.println("Exception is ;"+e);
+		              	}
+		              		
+	            	    if(userName.equals(f_email.getText())) 
+	              		{
+	              			System.out.println("WELCOME " + userName );
+	              			closeFrame();
+							
+								try {
+									new SaleOrder().display();
+									//so.display();
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							
+	              			
+	              		}
+	              		else
+	              		{
+	              			System.out.println("Please Enter Existing Email");
+	              			f_email.setText("");
+	              			JOptionPane.showMessageDialog( null, "Please Enter Existing Email", "NOTICE", 1 );
+	              		}
                                           
                       
                    } // end actionPerformed
@@ -183,10 +236,17 @@ public class PublicUsers {
     }
     
     
+    
+    public void closeFrame()
+    {
+    	frame.setVisible(false);
+    }
+    
+    
     // execute application
     public static void main( String args[] ) throws Exception 
     {
-    	new PublicUsers().display();  
+    	new PublicUsers().display(null, null);  
     	
     }
     
