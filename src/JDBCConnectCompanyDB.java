@@ -1,3 +1,11 @@
+/**
+ * Group: 479
+ * Trinh,Qui Thu (quibie7@gmail.com)
+ * Nguyen,Diem Ngoc (diiemnguyen@yahoo.com)
+ * Le,Thinh Minh (tmle04@yahoo.com)
+ */
+
+/**** HOW JDBC CONNECT TO MYSQL - FALL 2013 ***/
 import java.sql.*;
 
 public class JDBCConnectCompanyDB {
