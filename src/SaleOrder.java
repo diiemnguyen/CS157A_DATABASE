@@ -11,8 +11,11 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -21,9 +24,12 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
 public class SaleOrder extends JFrame {
 	// JDBC driver, database URL, username and password
@@ -34,14 +40,20 @@ public class SaleOrder extends JFrame {
     
     private Connection conn;
     private PreparedStatement ps;
+    private Statement statement;
+    private ResultSet rs;
 
     /* local variables for frame, panel, button, labels, text fields */
+    
+    private static final int FRAME_WIDTH = 250;
+    private static final int FRAME_HEIGHT = 400;
+    
     private JFrame frame;
     private JPanel jpan;
     private JPanel jpanel_tf1, jpanel_tf2, jpanel_tf3;
     private JTextField tf1, tf2, tf3;
     private JButton b_order;
-    private String s_cust_name, s_ord_case;
+    private String s_cust_name, s_item, s_ord_case;
     
     
     /* Constructor to create an UI for users login or create a new account */
@@ -50,6 +62,12 @@ public class SaleOrder extends JFrame {
     	
     	frame = new JFrame("SALE ORDER");
         
+    	//PublicUsers user = new PublicUsers(); 
+    	//String email = user.getEmail();
+    	
+    	//JLabel label = new JLabel("balance: " + email);
+    	//jpan.add(label);
+    	
         jpanel_tf1 = new JPanel(new GridBagLayout());
         jpanel_tf2 = new JPanel(new GridBagLayout());
         jpanel_tf3 = new JPanel(new GridBagLayout());
@@ -82,7 +100,7 @@ public class SaleOrder extends JFrame {
         
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(250, 400);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.setVisible(true);
         frame.getContentPane().add(jpan);
         
@@ -91,9 +109,28 @@ public class SaleOrder extends JFrame {
         conn = (Connection) DriverManager.getConnection( DB_URL, USER, PASS );
     }
     
+    public void populateJList(JList list, String query, Connection connection) throws SQLException
+    {
+        DefaultListModel model = new DefaultListModel(); //create a new list model
+
+        statement = (Statement) connection.createStatement();
+        rs = statement.executeQuery(query); //run your query
+
+        while (rs.next()) //go through each row that your query returns
+        {
+            s_item = rs.getString("prod_Title"); //get the element in column "item_code"
+            model.addElement(s_item); //add each item to the model
+        }
+        list.setModel(model);
+
+        rs.close();
+        statement.close();
+
+    }
+    
     public void display() throws Exception {
        
-    	/* action for create account button -- user creates a new account with company name and email */
+    	/* action for process order button -- salesman can make an order for customers */
         b_order.addActionListener( 
                 
             new ActionListener() 
@@ -104,7 +141,7 @@ public class SaleOrder extends JFrame {
                   // perform a new query
                   try 
                   {
-                	  /* prepared statement is for insert data into table customer of database companydb */
+                	  /* prepared statement is for insert data into table orders of database companydb */
                 	  ps = (PreparedStatement) conn.prepareStatement("insert into orders set cust_Name = ?, prod_Title = ?, ord_Case = ?");
                 	  s_cust_name = tf1.getText();
                 	  
@@ -116,11 +153,12 @@ public class SaleOrder extends JFrame {
       	              
       	              ps.executeUpdate();
       	              System.out.println("A new order has been added to companydb.orders!");
-      	              JOptionPane.showMessageDialog( b_order, "An order has been placed!", "SUCCESS", 0 );
+      	              JOptionPane.showMessageDialog( null, "An order has been placed!", "SUCCESS", 1 );
                 	  
                   } // end try
                   catch ( SQLException sqlException ) 
                   {
+                	  System.out.println("Please input enough information!");
                       JOptionPane.showMessageDialog( null, 
                         sqlException.getMessage(), "Database error", 
                         JOptionPane.ERROR_MESSAGE );
