@@ -5,6 +5,8 @@
  * Le,Thinh Minh (tmle04@yahoo.com)
  */
 
+/**** THIS CODE IS GIVEN FOR GROUP PROJECT - FALL 2013 ***/
+
 // Display the contents of the inventory table in the
 // companydb database.
 import java.awt.BorderLayout;
