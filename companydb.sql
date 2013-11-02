@@ -43,7 +43,6 @@ CREATE TABLE transactions
  sale_Case INT,
  sale_Price DOUBLE(10,2),
  sale_Amount DOUBLE(10,2),
- time_stamp timestamp not null default current_timestamp on update current_timestamp,
  PRIMARY KEY(tran_ID)
 );
 
@@ -52,7 +51,7 @@ CREATE TABLE transactions
 DROP TABLE IF EXISTS product;
 CREATE TABLE product
 (prod_Code VARCHAR(10) NOT NULL,
- prod_Category VARCHAR(30) NOT NULL,
+ prod_Name VARCHAR(30) NOT NULL,
  UNIQUE (prod_Code)
 ); 
 
@@ -73,11 +72,11 @@ CREATE TABLE inventory
 /* Table 6: customer */
 DROP TABLE IF EXISTS customer;
 CREATE TABLE customer
-(cust_ID INT NOT NULL DEFAULT 1,
+(cust_ID INT AUTO_INCREMENT DEFAULT NULL,
  cust_Name VARCHAR (100),
  cust_Email VARCHAR (100),
  cust_Date DATE,
- PRIMARY KEY(cust_Email)
+ PRIMARY KEY(cust_ID)
 );
 
 
@@ -94,28 +93,9 @@ CREATE TABLE orders
  ord_Case INT NOT NULL,
  ord_Case_Price DOUBLE(10,2) REFERENCES transactions,
  ord_Amount DOUBLE(10,2),
- PRIMARY KEY(ord_ID),
- FOREIGN KEY(cust_Email)REFERENCES Customer(cust_Email)
+ PRIMARY KEY(ord_ID)
 );
 
-/* Table 8: transactions_archived */
-DROP TABLE IF EXISTS transactions_archived;
-CREATE TABLE transactions_archived
-(tran_ID int AUTO_INCREMENT,
- tran_Date DATE,
- ord_ID INT REFERENCES orders,
- sale_Year varchar(10),
- empl_ID INT, 
- prod_No INT, 
- cust_Name VARCHAR(100) NOT NULL REFERENCES orders,
- prod_Title VARCHAR(200),
- sale_Name VARCHAR(30), 
- sale_Case INT,
- sale_Price DOUBLE(10,2),
- sale_Amount DOUBLE(10,2),
- time_stamp timestamp not null default current_timestamp on update current_timestamp,
- PRIMARY KEY(tran_ID)
-);
 
 #START TRIGGER 1: trigger_cust_info -- check if the customer info is legal to create one.
 DELIMITER //
@@ -138,6 +118,7 @@ END;
 //
 DELIMITER ;
 #END TRIGGER 1
+
 
 #START TRIGGER 2: trigger_order -- check if the order info is legal to make an order
 delimiter //
@@ -229,24 +210,17 @@ END;
 delimiter ;
 #END TRIGGER 3
 
-drop procedure if exists prevention;
-delimiter //
-create procedure prevention(in at_time timestamp)
-begin 
-	truncate table transactions_archived;
-	insert into transactions_archived
-	select * from transactions where transactions.time_stamp < at_time;
-end; // 
-delimiter ;
 
-
-LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\companydb\\company.txt' INTO TABLE company;
-LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\companydb\\employee.txt' INTO TABLE employee;
-LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\companydb\\product.txt' INTO TABLE product;
-LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\companydb\\inventory.txt' INTO TABLE inventory;
-LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\companydb\\customer.txt' INTO TABLE customer(cust_Name, cust_Email);
-LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\companydb\\orders.txt' INTO TABLE orders(cust_Name, prod_Title, ord_Case);
+LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\company.txt' INTO TABLE company;
+LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\employee.txt' INTO TABLE employee;
+LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\product.txt' INTO TABLE product;
+LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\inventory.txt' INTO TABLE inventory;
+LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\customer.txt' INTO TABLE customer(cust_Name, cust_Email);
+LOAD DATA LOCAL INFILE 'C:\\Project_49J\\JDBC_Project\\src\\orders.txt' INTO TABLE orders(cust_Name, prod_Title, ord_Case);
 
 
 
-set sql_safe_updates=0;
+
+
+
+

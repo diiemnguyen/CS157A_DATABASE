@@ -12,6 +12,8 @@ select * from product;
 
 select * from transactions;
 
+select * from orders, transactions;
+
 insert into inventory (prod_Code, prod_No, prod_Title, prod_Case_Qty, prod_Case_Weight, prod_Case_Price) 
 values ('2p', 204, 'Pork Butt Bone-in Nebraska', 1000 , 20, 68.00);
 
@@ -105,34 +107,3 @@ values('International Supermarket','Beef Feet Sunland',-2);
 
 delete from customer where cust_Name = 'International supermarket' and cust_ID = 1;
 
-/* tests stored procedure calls prevention */
-call prevention('2014-09-18 01:23:47');
-select * from transactions_archived;
-
-/*----------  TEST UI PublicUsers.java ---------*/
-select * from customer;
-
-select * from company;
-
-select * from employee;
-
-delete from customer where cust_ID in (6,7,8,9) and cust_Name in ('diem db','Test company db','test 2','Fish Wholesale');
-
-select empl_ID from employee, company where empl_Name = dept_Manager;
-
-/*------  TEST FOREIGN KEY ORDERS ------------*/
-
-SELECT * from inventory;
-
-select * from orders;
-
-select * from customer;
-
-
-
-
-	
-	
-	
-	
-	
