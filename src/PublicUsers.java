@@ -29,6 +29,14 @@ import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+/**
+ * PublicUsers class will allow a new user 
+ *   to create an account or an existing
+ *   user to login, and then the existing 
+ *   user can make an order by himself
+ *   without any help from salesmen
+ */
+
 public class PublicUsers extends HttpServlet {
 	// JDBC driver, database URL, username and password
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -72,11 +80,11 @@ public class PublicUsers extends HttpServlet {
     	f2 = new JTextField(20);
     	f_email = new JTextField(20);
     	
-    	l1 = new JLabel("COMPANY NAME");
+    	l1 = new JLabel("\nCOMPANY NAME");
     	l2 = new JLabel("COMPANY EMAIL");
     	l_email = new JLabel("LOG IN EMAIL: ");
     	
-    	JLabel l_newCust = new JLabel("-------------------------------- NEW CUSTOMER ---------------------------");
+    	JLabel l_newCust = new JLabel("\n-------------------------------- NEW CUSTOMER ---------------------------\n");
         p.add(l_newCust);
     	
     	/* new user create an account*/
@@ -92,13 +100,13 @@ public class PublicUsers extends HttpServlet {
         JLabel empty1 = new JLabel("                                                  ");
         p.add(empty1);
         
-        JLabel empty2 = new JLabel("***********************************************************************");
+        JLabel empty2 = new JLabel("***********************************************************************\n");
         p.add(empty2);
         
         JLabel empty3 = new JLabel("                                                          ");
         p.add(empty3);
         
-        JLabel l_existUser = new JLabel("-------------------------------- EXISTING USER ---------------------------");
+        JLabel l_existUser = new JLabel("\n-------------------------------- EXISTING USER ---------------------------\n");
         p.add(l_existUser);
        
        
@@ -132,6 +140,12 @@ public class PublicUsers extends HttpServlet {
     	return s2; 
     }
     
+    public String getLoginEmail()
+    {
+    	s_email = f_email.getText();
+    	return s_email; 
+    }
+    
     public void init(ServletConfig config)  throws ServletException
     {
     	 this.config=config;
@@ -144,10 +158,9 @@ public class PublicUsers extends HttpServlet {
                 
             new ActionListener() 
             {
-               // pass query to table model
+               
                public void actionPerformed( ActionEvent event )
                {
-                  // perform a new query
                   try 
                   {
                 	  /* prepared statement is for insert data into table customer of database companydb */
@@ -163,18 +176,19 @@ public class PublicUsers extends HttpServlet {
       	              f1.setText("");
       	              f2.setText("");
       	              frame.setVisible(true);
+      	              f_email.requestFocus();
                 	  
                   } // end try
                   catch ( SQLException sqlException ) 
                   {
-                	  System.out.println("Please Enter Name and/or Email to create a new account");
-                      JOptionPane.showMessageDialog( null, 
-                    		  sqlException.getMessage(), "Database error", 
-                    		  JOptionPane.ERROR_MESSAGE );
+                	  System.out.println("Database error -- trigger 1: " + sqlException.getMessage());
+                      JOptionPane.showMessageDialog( null, "Please Enter Company Name and/or Email",
+                    		   "CREATE ACCOUNT NOTICE", 1 );
                       f1.setText("");
                       frame.setVisible(true);
+                      f1.requestFocus();
                      
-                  }             
+                  } // end catch
                   //System.exit( 1 ); // terminate application
                                       
                   
@@ -189,54 +203,85 @@ public class PublicUsers extends HttpServlet {
                 
                 new ActionListener() 
                 {
-                   // pass query to table model
+                	
                    public void actionPerformed( ActionEvent event )
                    {
-                	   try {
-	              			//Add the data into the database
-	              			String sql = "select cust_Email from customer";
-	              			statement = (Statement) conn.createStatement();
-	              			statement.executeQuery (sql);
-	              			rs = statement.getResultSet();
-	              			while (rs.next ()){
-	              				userName = rs.getString("cust_Email");
-	              			}
-	              			rs.close ();
-	              			statement.close ();
-	              		}catch(Exception e){
-	              			System.out.println("Exception is ;"+e);
-		              	}
-		              		
-	            	    if(userName.equals(f_email.getText())) 
-	              		{
-	              			System.out.println("WELCOME " + userName );
-	              			closeFrame();
-							
-								try {
-									new SaleOrder().display();
-									//so.display();
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							
-	              			
-	              		}
-	              		else
-	              		{
-	              			System.out.println("Please Enter Existing Email");
-	              			f_email.setText("");
-	              			JOptionPane.showMessageDialog( null, "Please Enter Existing Email", "NOTICE", 1 );
-	              		}
-                                          
-                      
+                	   if (f_email.getText().isEmpty())
+             		   {
+             				System.out.println("Please Enter Existing Email");
+             				JOptionPane.showMessageDialog( null, "Cannot login without email", "LOGIN NOTICE", 1 );
+							f_email.setText("");
+							f_email.requestFocus();
+             		   } else {
+                		   
+	                	   try {
+		              			//set sql string for later invoking
+		              			String sql = "select cust_Email from customer";
+		              			statement = (Statement) conn.createStatement();
+		              			statement.executeQuery (sql);
+		              			rs = statement.getResultSet();
+		              			
+		              			/*while ( rs.next() )
+		              			{
+		              				userName = rs.getString("cust_Email");
+		              				if( !userName.equals(f_email.getText()) )
+			              			{
+		              					System.out.println("Please Enter Existing Email");
+																				// 1 -- notice
+										JOptionPane.showMessageDialog( null, "Please Enter Existing Email", "LOGIN NOTICE", 1 );
+										f_email.setText("");
+										f_email.requestFocus();
+										return;
+			              			} 
+		              				
+		              			}*/
+		              			
+		              			
+	              				if( rs.next() )
+		              			{
+	              					
+			              				System.out.println("WELCOME " + f_email.getText() );
+				              			closeFrame();
+										
+											try {
+												
+												new SaleOrder(f_email.getText()).display();
+												
+												
+											} catch (Exception e) {
+												
+												e.printStackTrace();
+											}
+	              					
+		              			} else {
+              						System.out.println("Please Enter Existing Email");
+																			// 1 -- notice
+									JOptionPane.showMessageDialog( null, "Please Enter Existing Email", "LOGIN NOTICE", 1 );
+									f_email.setText("");
+									f_email.requestFocus();
+              					}
+		              				
+		              			
+		              			
+		              			
+		              			rs.close ();
+		              			statement.close ();
+		              			
+		              		} catch(Exception e) {
+		              			System.out.println("Exception is :"+e);
+			              	}
+		              	
+                	   }// end if check empty
+                	   
                    } // end actionPerformed
                 } // end ActionListener inner class          
              ); // end call to addActionListener
     }
     
     
-    
+    /**
+     	closeFrame will close the current frame
+     */
     public void closeFrame()
     {
     	frame.setVisible(false);

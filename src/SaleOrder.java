@@ -50,32 +50,60 @@ public class SaleOrder extends JFrame {
     
     private JFrame frame;
     private JPanel jpan;
-    private JPanel jpanel_tf1, jpanel_tf2, jpanel_tf3;
-    private JTextField tf1, tf2, tf3;
+    private JPanel jpanel_tf0, jpanel_tf1, jpanel_tf2, jpanel_tf3;
+    private JTextField tf0, tf1, tf2, tf3;
     private JButton b_order;
     private String s_cust_name, s_item, s_ord_case;
     
+    PublicUsers pu;
+    private String email = "";
+    private String db_email = new String("");
+    
     
     /* Constructor to create an UI for users login or create a new account */
-    public SaleOrder() throws InstantiationException, IllegalAccessException, 
+    public SaleOrder(String setEmail) throws InstantiationException, IllegalAccessException, 
     	ClassNotFoundException, SQLException {
-    	
+    
     	frame = new JFrame("SALE ORDER");
         
-    	//PublicUsers user = new PublicUsers(); 
-    	//String email = user.getEmail();
-    	
-    	//JLabel label = new JLabel("balance: " + email);
-    	//jpan.add(label);
-    	
+    	jpanel_tf0 = new JPanel(new GridBagLayout());
         jpanel_tf1 = new JPanel(new GridBagLayout());
         jpanel_tf2 = new JPanel(new GridBagLayout());
         jpanel_tf3 = new JPanel(new GridBagLayout());
         
+        jpanel_tf0.setBorder(new TitledBorder("LOGIN AS"));
         jpanel_tf1.setBorder(new TitledBorder("COMPANY NAME"));
         jpanel_tf2.setBorder(new TitledBorder("PRODUCT TITLE"));
         jpanel_tf3.setBorder(new TitledBorder("ORDER CASE"));
         
+        pu = new PublicUsers();
+    	pu.closeFrame();
+    	email = pu.getLoginEmail(); 
+    	/*
+    	try {
+  			//Add the data into the database
+  			String sql = "select cust_Email from customer";
+  			statement = (Statement) conn.createStatement();
+  			statement.executeQuery (sql);
+  			rs = statement.getResultSet();
+  			
+  			while ( rs.next() )
+  			{
+  				db_email = rs.getString("cust_Email");
+  			}
+  			rs.close ();
+  			statement.close ();
+  			
+  		} catch(Exception e) {
+  			System.out.println("Login as : Saleman " + e);
+      	}
+    	
+    	if ( db_email.equals(pu.getLoginEmail()) ) 
+    		tf0 = new JTextField("\n\t" + db_email, 10);
+    	else
+    		tf0 = new JTextField("\n\t" + "Saleman ", 10);*/
+        
+    	tf0 = new JTextField("\n" + setEmail, 15);
         tf1 = new JTextField("", 15);
         tf2 = new JTextField("", 15);
         tf3 = new JTextField("", 3);
@@ -85,6 +113,7 @@ public class SaleOrder extends JFrame {
                 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE,
                 new Insets(10, 10, 10, 10), 0, 0);
 
+        jpanel_tf0.add(tf0, constraints);
         jpanel_tf1.add(tf1, constraints);
         jpanel_tf2.add(tf2, constraints);
         jpanel_tf3.add(tf3, constraints);
@@ -92,7 +121,8 @@ public class SaleOrder extends JFrame {
         constraints.gridx = 4;
         jpanel_tf3.add(b_order, constraints);
 
-        jpan = new JPanel(new GridLayout(3, 1, 10, 10));
+        jpan = new JPanel(new GridLayout(4, 1, 10, 10));
+        jpan.add(jpanel_tf0);
         jpan.add(jpanel_tf1);
         jpan.add(jpanel_tf2);
         jpan.add(jpanel_tf3);
@@ -159,12 +189,13 @@ public class SaleOrder extends JFrame {
                   catch ( SQLException sqlException ) 
                   {
                 	  System.out.println("Please input enough information!");
-                      JOptionPane.showMessageDialog( null, 
-                        sqlException.getMessage(), "Database error", 
-                        JOptionPane.ERROR_MESSAGE );
+                      JOptionPane.showMessageDialog( null, "Please Input Enough Inforamtion",
+                    		  						"MAKE ORDER NOTICE", 1 );
+                      frame.setVisible(true);
+                      tf1.requestFocus();
                      
                   }             
-                  System.exit( 1 ); // terminate application
+                  //System.exit( 1 ); // terminate application
                                       
                   
                } // end actionPerformed
@@ -174,13 +205,20 @@ public class SaleOrder extends JFrame {
         
     }
     
+    /**
+ 		closeOrderFrame will close the current frame
+     */
+    public void closeOrderFrame()
+    {
+    	frame.setVisible(false);
+    }
     
     // execute application
-    public static void main( String args[] ) throws Exception 
+    /*public static void main( String args[] ) throws Exception 
     {
-    	new SaleOrder().display();  
+    	new SaleOrder(email).display();
     	
-    }
+    }*/
     
 }
 

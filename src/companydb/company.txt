@@ -8,5 +8,5 @@
 1108	Ordering	Jerrie
 1109	Reception	Kathy
 1110	Filing	Ben
-1111	Organizing	Danny
+1111	Oganizing	Danny
 1112	Human Resource	Tom

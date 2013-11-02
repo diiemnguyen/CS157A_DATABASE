@@ -1,5 +1,5 @@
 1 - company  (dept_ID, dept_Name, dept_Manager)
-2 - employee (dept_ID, empl_ID, empl_Name, empl_DOB, empl_Email, empl_Position, empl_Salary)
+2 - employee (empl_ID, dept_ID, empl_Name, empl_DOB, empl_Email, empl_Position, empl_Salary)
 3 - transactions (tran_ID, tran_Date, ord_ID, sale_Year, empl_ID, prod_No, cust_Name, prod_Title, sale_Name, sale_Case, sale_Price, sale_Amount,)
 4 - product (prod_Code, prod_Name)
 5 - inventory (prod_Code, prod_No, prod_Title, prod_Case_Qty, prod_Case_Weight, prod_Case_Price)
