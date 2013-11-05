@@ -6,6 +6,9 @@
  */
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.*;
 
 import com.mysql.jdbc.Connection;
@@ -14,6 +17,7 @@ import com.mysql.jdbc.Statement;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +40,6 @@ class SalemanUser extends JFrame {
     private PreparedStatement ps;
     private ResultSet rs;
     private Statement statement;
-    private int rowNum;
     
     /* local variables for frame, panel, button, labels, text fields */
     private static final int FRAME_WIDTH = 280;
@@ -47,10 +50,10 @@ class SalemanUser extends JFrame {
     private JButton b_login;
     private JTextField f_email;
     private JLabel l_company, l_email;
-    private String s1, s_email;
     
     private String userName = new String("");
     private ServletConfig config;
+    private Boolean loop = false;
     
     
 	SalemanUser() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
@@ -82,6 +85,91 @@ class SalemanUser extends JFrame {
 	}
 	
 	
+	public void init(ServletConfig config)  throws ServletException
+    {
+    	 this.config=config;
+    }
+	
+	public void display(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException, Exception {
+	       
+        /* action for login button -- user login with email address */
+        b_login.addActionListener( 
+                
+                new ActionListener() 
+                {
+                	
+                   public void actionPerformed( ActionEvent event )
+                   {
+                	   // check if the input text is empty -- show message
+                	   if (f_email.getText().isEmpty())
+             		   {
+             				
+                		    System.out.println("Salesman cannot login without email");
+             				JOptionPane.showMessageDialog( null, "Salesman cannot login without email", "LOGIN NOTICE", 1 );
+							f_email.setText("");
+							f_email.requestFocus();
+							
+             		   } else {	// otherwise, connect table employee for empl_Email info.
+                		   
+             			   // check only 2 salesmen can login to make an order for customer, 
+             			   // others employees cannot login
+             			   if ( f_email.getText().equals("lucie@food.com") || f_email.getText().equals( "ken@food.com") )
+             			   {
+             			   
+		                	   try {
+		                		   
+		                		   do{
+		                               loop = false;
+		                               userName = new String(f_email.getText());
+		                               ps=(PreparedStatement) conn.prepareStatement("select empl_Email  from  employee  where empl_Email=?");
+		                               ps.setString(1,userName);
+		                               rs=ps.executeQuery();
+		                               
+		                               if(!rs.next() && rs.getRow() == 0) {
+		                            	   System.out.println("Please Enter Salesman Email");
+		                                   JOptionPane.showMessageDialog(null,"Login Failed. Please Enter Salesman email!", "LOGIN NOTICE", 1);
+		                                   f_email.setText("");
+		                                   f_email.requestFocus();
+		                                   loop = true;
+		                                   frame.setVisible(true);
+		                                   break;
+		                               } else {
+		                                   userName = rs.getString("empl_Email");
+		                                   System.out.println("WELCOME " + userName);
+		                                   closeSalemanLoginFrame();
+										   new SaleOrder(f_email.getText()).display();
+		                               }
+		                               
+		                               //rs.close ();
+		  		              		   //statement.close ();
+		                           }while (loop);
+		                		   
+			              		} catch(Exception e) {
+			              			
+			              			System.out.println("Exception is :"+e);
+			              			
+				              	} // end try catch
+		                	   
+             			   } else {
+	             				
+             				   System.out.println("Only Salesman can log in to make an order!");
+	                           JOptionPane.showMessageDialog(null,"Only Salesman can log in to make an order!", "LOGIN NOTICE", 1);
+	                           f_email.setText("");
+	                           f_email.requestFocus();
+	                           loop = true;
+	                           frame.setVisible(true);
+             			   }
+		                	   
+		              	
+                	   }// end if check empty
+                	  
+
+                   } // end actionPerformed
+                } // end ActionListener inner class          
+             ); // end call to addActionListener
+    }
+	
+	
 	/**
 		closeSalemanLoginFrame will close the current frame
 	 */
@@ -91,10 +179,9 @@ class SalemanUser extends JFrame {
 	}
 	
 	// Saleman user login frame
-	public static void main(String[] args) throws InstantiationException, 
-			IllegalAccessException, ClassNotFoundException, SQLException
+	public static void main(String[] args) throws ServletException, IOException, Exception
 	{
-		new SalemanUser();
+		new SalemanUser().display(null, null);
 	}
 
 } // end SalemanUser class
