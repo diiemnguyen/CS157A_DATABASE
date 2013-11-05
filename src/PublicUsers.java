@@ -26,6 +26,7 @@ import com.mysql.jdbc.Statement;
 import java.io.*;
 import java.util.*;
 import java.sql.*;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -63,6 +64,8 @@ public class PublicUsers extends HttpServlet {
     
     private String userName = new String("");
     private ServletConfig config;
+    
+    Boolean loop = false;
     
     
     
@@ -206,73 +209,52 @@ public class PublicUsers extends HttpServlet {
                 	
                    public void actionPerformed( ActionEvent event )
                    {
+
                 	   if (f_email.getText().isEmpty())
              		   {
-             				System.out.println("Please Enter Existing Email");
+             				System.out.println("Cannot login without email");
              				JOptionPane.showMessageDialog( null, "Cannot login without email", "LOGIN NOTICE", 1 );
 							f_email.setText("");
 							f_email.requestFocus();
              		   } else {
                 		   
 	                	   try {
-		              			//set sql string for later invoking
-		              			String sql = "select cust_Email from customer";
-		              			statement = (Statement) conn.createStatement();
-		              			statement.executeQuery (sql);
-		              			rs = statement.getResultSet();
-		              			
-		              			/*while ( rs.next() )
-		              			{
-		              				userName = rs.getString("cust_Email");
-		              				if( !userName.equals(f_email.getText()) )
-			              			{
-		              					System.out.println("Please Enter Existing Email");
-																				// 1 -- notice
-										JOptionPane.showMessageDialog( null, "Please Enter Existing Email", "LOGIN NOTICE", 1 );
-										f_email.setText("");
-										f_email.requestFocus();
-										return;
-			              			} 
-		              				
-		              			}*/
-		              			
-		              			
-	              				if( rs.next() )
-		              			{
-	              					
-			              				System.out.println("WELCOME " + f_email.getText() );
-				              			closeFrame();
-										
-											try {
-												
-												new SaleOrder(f_email.getText()).display();
-												
-												
-											} catch (Exception e) {
-												
-												e.printStackTrace();
-											}
-	              					
-		              			} else {
-              						System.out.println("Please Enter Existing Email");
-																			// 1 -- notice
-									JOptionPane.showMessageDialog( null, "Please Enter Existing Email", "LOGIN NOTICE", 1 );
-									f_email.setText("");
-									f_email.requestFocus();
-              					}
-		              				
-		              			
-		              			
-		              			
-		              			rs.close ();
-		              			statement.close ();
-		              			
+	                		   
+	                		   do{
+	                               loop = false;
+	                               userName = new String(f_email.getText());
+	                               ps=(PreparedStatement) conn.prepareStatement("select cust_Email  from  customer  where cust_Email=?");
+	                               ps.setString(1,userName);
+	                               rs=ps.executeQuery();
+	                               
+	                               if(!rs.next() && rs.getRow() == 0) {
+	                            	   System.out.println("Please Enter Existing Email");
+	                                   JOptionPane.showMessageDialog(null,"Login Failed. Please try again!", "LOGIN NOTICE", 1);
+	                                   f_email.setText("");
+	                                   f_email.requestFocus();
+	                                   loop = true;
+	                                   frame.setVisible(true);
+	                                   break;
+	                               } else {
+	                                   userName = rs.getString("cust_Email");
+	                                   System.out.println("WELCOME " + userName);
+	                                   closeFrame();
+									   new SaleOrder(f_email.getText()).display();
+	                               }
+	                               
+	                               //rs.close ();
+	  		              		   //statement.close ();
+	                           }while (loop);
+	                		   
 		              		} catch(Exception e) {
+		              			
 		              			System.out.println("Exception is :"+e);
-			              	}
+		              			
+			              	} // end try catch
 		              	
                 	   }// end if check empty
-                	   
+                	  
+
                    } // end actionPerformed
                 } // end ActionListener inner class          
              ); // end call to addActionListener
