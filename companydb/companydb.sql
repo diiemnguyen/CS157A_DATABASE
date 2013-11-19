@@ -73,11 +73,12 @@ CREATE TABLE inventory
 /* Table 6: customer */
 DROP TABLE IF EXISTS customer;
 CREATE TABLE customer
-(cust_ID INT NOT NULL DEFAULT 1,
+(cust_ID INT auto_increment,
  cust_Name VARCHAR (100),
  cust_Email VARCHAR (100),
  cust_Date DATE,
- PRIMARY KEY(cust_Email)
+ PRIMARY KEY(cust_Email),
+ unique key(cust_id)
 );
 
 
